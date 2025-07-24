@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Redirecting...</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const params = new URLSearchParams(window.location.search);
+        const challengeId = params.get("challengeId");
+
+        // Store URLs
+        const androidStoreUrl =
+          "https://play.google.com/store/apps/details?id=com.quandes1.ehrenhero";
+        const iosStoreUrl = "https://apps.apple.com/app/id6745928650";
+
+        // Detect device
+        const userAgent =
+          navigator.userAgent || navigator.vendor || window.opera;
+        const isAndroid = /android/i.test(userAgent);
+        const isIOS = /iPad|iPhone|iPod/.test(userAgent) && !window.MSStream;
+
+        // Deep link to your app
+        const appLink = `myapp://challenges?challengeId=${challengeId}`;
+
+        // If no challengeId, fallback to store
+        if (!challengeId) {
+          window.location.href = isAndroid ? androidStoreUrl : iosStoreUrl;
+          return;
+        }
+
+        const fallbackStoreUrl = isAndroid ? androidStoreUrl : iosStoreUrl;
+
+        // Try opening the app
+        const now = Date.now();
+        window.location.href = appLink;
+
+        // If app doesn't open in 2 seconds, redirect to the store
+        setTimeout(() => {
+          if (Date.now() - now < 2000) {
+            window.location.href = fallbackStoreUrl;
+          }
+        }, 1500);
+      });
+    </script>
+  </head>
+  <body>
+    <h1>Redirecting to the app...</h1>
+    <p>If nothing happens, <a id="manualLink" href="#">click here</a>.</p>
+    <script>
+      const params = new URLSearchParams(window.location.search);
+      const challengeId = params.get("challengeId");
+      const appLink = `myapp://challenges?challengeId=${challengeId}`;
+      document.getElementById("manualLink").href = appLink;
+    </script>
+  </body>
+</html>
