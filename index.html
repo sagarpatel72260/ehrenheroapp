@@ -38,7 +38,7 @@
         const isAndroid = /android/i.test(userAgent);
         const isIOS = /iPad|iPhone|iPod/.test(userAgent) && !window.MSStream;
 
-        const appLink = `myapp://challenges?challengeId=${challengeId}`;
+        const appLink = `ehrenhero://challenges?challengeId=${challengeId}`;
         const fallbackStoreUrl = isAndroid ? androidStoreUrl : iosStoreUrl;
 
         document.getElementById("manualLink").href = appLink;
